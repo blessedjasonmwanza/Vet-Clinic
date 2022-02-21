@@ -13,7 +13,7 @@ This repository includes files with plain SQL that can be used to recreate a dat
 
 ## Author
 
-👤 **Bless Jason Mwanza**
+👤 **Blessed Jason Mwanza**
 
 - GitHub: [@blessedjasonmwanza](https://github.com/blessedjasonmwanza)
 - Twitter: [@mwanzabj](https://twitter.com/mwanzabj)
