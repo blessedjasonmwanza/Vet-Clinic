@@ -232,6 +232,6 @@ SELECT species, AVG(escape_attempts) AS avg_escapes  FROM animals WHERE date_of_
 
 --  avg_escapes 
 -- -------------
-            
+
 -- (1 row) 
 -- NB commented output sampples changes when data.sql is run

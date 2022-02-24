@@ -33,3 +33,68 @@ UPDATE animals SET owners_id = o.id FROM (SELECT id FROM owners WHERE full_name 
 UPDATE animals SET owners_id = o.id FROM (SELECT id FROM owners WHERE full_name = 'Jennifer Orwell') o WHERE name IN ('Pikachu', 'Gabumon');
 UPDATE animals SET owners_id = o.id FROM (SELECT id FROM owners WHERE full_name = 'Melody Pond') o WHERE name IN ('Charmander', 'Squirtle', 'Blossom');
 UPDATE animals SET owners_id = o.id FROM (SELECT id FROM owners WHERE full_name = 'Dean Winchester') o WHERE name IN ('Angemon', 'Boarmon');
+
+
+SELECT a.name AS animal, o.full_name AS owner FROM animals a LEFT JOIN owners o ON a.owners_id = o.id WHERE o.full_name = 'Melody Pond';
+--    animal   |    owner    
+-- ------------+-------------
+--  Charmander | Melody Pond
+--  Squirtle   | Melody Pond
+--  Blossom    | Melody Pond
+--  Charmander | Melody Pond
+--  Squirtle   | Melody Pond
+--  Blossom    | Melody Pond
+-- (6 rows)
+
+SELECT a.name AS animal, s.name AS belongs_to FROM animals a LEFT JOIN species s ON a.species_id = s.id WHERE s.name = 'Pokemon';
+--    animal   | belongs_to 
+-- ------------+------------
+--  Pikachu    | Pokemon
+--  Charmander | Pokemon
+--  Squirtle   | Pokemon
+--  Blossom    | Pokemon
+-- (4 rows)
+
+SELECT o.full_name AS owner, a.name AS animal FROM animals a RIGHT JOIN owners o ON a.owners_id = o.id;
+--       owner      |   animal   
+-- -----------------+------------
+--  Sam Smith       | Agumon
+--  Bob             | Devimon
+--  Bob             | Plantmon
+--  Jennifer Orwell | Gabumon
+--  Jennifer Orwell | Pikachu
+--  Melody Pond     | Charmander
+--  Melody Pond     | Squirtle
+--  Melody Pond     | Blossom
+--  Dean Winchester | Angemon
+--  Dean Winchester | Boarmon
+--  Jodie Whittaker 
+
+SELECT s.name AS specie, COUNT(a.*) AS total FROM animals a LEFT JOIN species s ON a.species_id = s.id GROUP BY s.name;
+--  specie  | total 
+-- ---------+-------
+--  Pokemon |     4
+--  Digimon |     6
+-- (2 rows)
+
+SELECT o.full_name AS owner, a.name AS animal, s.name AS specie FROM animals a RIGHT JOIN species s  ON s.id = a.species_id RIGHT JOIN owners o ON a.owners_id = o.id WHERE s.name LIKE 'Digimon';
+--       owner      |  animal  | specie  
+-- -----------------+----------+---------
+--  Sam Smith       | Agumon   | Digimon
+--  Bob             | Devimon  | Digimon
+--  Bob             | Plantmon | Digimon
+--  Jennifer Orwell | Gabumon  | Digimon
+--  Dean Winchester | Angemon  | Digimon
+--  Dean Winchester | Boarmon  | Digimon
+-- (6 rows)
+
+SELECT a.name AS animal, o.full_name AS owned_by FROM animals a JOIN owners o ON a.owners_id = o.id WHERE o.full_name LIKE 'Dean Winchester' AND a.escape_attempts <= 0;
+--  animal | owned_by 
+-- --------+----------
+-- (0 rows)
+
+SELECT o.full_name AS owner, COUNT(a.*) AS total_animals FROM animals a RIGHT JOIN owners o ON a.owners_id = o.id GROUP BY o.full_name ORDER BY total_animals DESC LIMIT 1;
+--     owner    | total_animals 
+-- -------------+---------------
+--  Melody Pond |             3
+-- (1 row)
