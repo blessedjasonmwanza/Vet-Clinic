@@ -18,7 +18,14 @@ This repository includes files with plain SQL that can be used to recreate a dat
 - GitHub: [@blessedjasonmwanza](https://github.com/blessedjasonmwanza)
 - Twitter: [@mwanzabj](https://twitter.com/mwanzabj)
 - LinkedIn: [Blessedjasonmwanza](https://linkedin.com/in/blessedjasonmwanza)
-- AngelList: [blessedjasonmwanza][https://angel.co/u/blessedjasonmwanza]
+- AngelList: [blessedjasonmwanza](https://angel.co/u/blessedjasonmwanza)
+
+👤 **Natalia Poletaeva**
+
+- GitHub: [@NataliaPoletaeva](https://github.com/NataliaPoletaeva)
+- Twitter: [@Fly_Meets](https://twitter.com/Fly_Meets)
+- LinkedIn: [Natalia Poletaeva](https://www.linkedin.com/in/nataliapoletaeva/)
+- AngelList: [Natalia Poletaeva](https://angel.co/u/natalia-poletaeva-1)
 
 ## 🤝 Contributing
 

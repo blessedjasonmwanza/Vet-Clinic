@@ -302,3 +302,52 @@ WHERE vets.name = 'Maisy Smith'
 GROUP BY species.name
 ORDER BY species.name DESC 
 LIMIT 1;
+
+explain analyze SELECT COUNT(*) FROM visits where animal_id = 4;
+--                                                                   QUERY PLAN                                                                  
+-- ----------------------------------------------------------------------------------------------------------------------------------------------
+--  Finalize Aggregate  (cost=415203.86..415203.87 rows=1 width=8) (actual time=69973.689..70445.780 rows=1 loops=1)
+--    ->  Gather  (cost=415203.64..415203.85 rows=2 width=8) (actual time=69973.460..70445.762 rows=3 loops=1)
+--          Workers Planned: 2
+--          Workers Launched: 2
+--          ->  Partial Aggregate  (cost=414203.64..414203.65 rows=1 width=8) (actual time=69943.226..69943.229 rows=1 loops=3)
+--                ->  Parallel Seq Scan on visits  (cost=0.00..412007.98 rows=878265 width=0) (actual time=5.284..69862.241 rows=718857 loops=3)
+--                      Filter: (animal_id = 4)
+--                      Rows Removed by Filter: 12220571
+--  Planning Time: 0.097 ms
+--  JIT:
+--    Functions: 14
+--    Options: Inlining false, Optimization false, Expressions true, Deforming true
+--    Timing: Generation 1.809 ms, Inlining 0.000 ms, Optimization 0.797 ms, Emission 14.587 ms, Total 17.192 ms
+--  Execution Time: 70446.725 ms
+-- (14 rows)
+
+explain analyze SELECT * FROM visits where vet_id = 2;
+--                                                        QUERY PLAN                                                       
+-- ------------------------------------------------------------------------------------------------------------------------
+--  Seq Scan on visits  (cost=0.00..695058.55 rows=4407178 width=12) (actual time=236.611..42283.244 rows=4313166 loops=1)
+--    Filter: (vet_id = 2)
+--    Rows Removed by Filter: 34505118
+--  Planning Time: 0.102 ms
+--  JIT:
+--    Functions: 2
+--    Options: Inlining true, Optimization true, Expressions true, Deforming true
+--    Timing: Generation 41.602 ms, Inlining 207.539 ms, Optimization 22.460 ms, Emission 6.357 ms, Total 277.958 ms
+--  Execution Time: 42516.058 ms
+-- (9 rows)
+explain analyze SELECT * FROM owners where email = 'owner_18327@mail.com';
+--                                                          QUERY PLAN                                                          
+-- -----------------------------------------------------------------------------------------------------------------------------
+--  Gather  (cost=1000.00..107119.18 rows=3 width=43) (actual time=1539.992..32825.427 rows=3 loops=1)
+--    Workers Planned: 2
+--    Workers Launched: 2
+--    ->  Parallel Seq Scan on owners  (cost=0.00..106118.88 rows=1 width=43) (actual time=16451.403..27529.857 rows=1 loops=3)
+--          Filter: ((email)::text = 'owner_18327@mail.com'::text)
+--          Rows Removed by Filter: 2500005
+--  Planning Time: 39.035 ms
+--  JIT:
+--    Functions: 6
+--    Options: Inlining false, Optimization false, Expressions true, Deforming true
+--    Timing: Generation 5.119 ms, Inlining 0.000 ms, Optimization 76.192 ms, Emission 781.019 ms, Total 862.331 ms
+--  Execution Time: 32827.078 ms
+-- (12 rows)
